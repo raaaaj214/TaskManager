@@ -16,32 +16,13 @@ const app = express();
 config();
 dotenv.config();
 app.use(cors({
-    origin : "http://localhost:3000",
+    origin : ["http://localhost:3000","http://localhost:3001"],
     methods : ["GET","POST","PUT","PATCH","DELETE"],
     credentials : true,
 }))
 app.use(cookieParser());
 app.use(express.urlencoded({extended : true}))
 app.use(express.json());
-
-// cloudinary.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
-//   { public_id: "olympic_flag" }, 
-//   function(error, result) {console.log(result); });
-
-// app.get("/" , async(req,res) => {
-//     try {
-//         const newEmp = await Employee.create({profilePicture : "raj", firstName:"Raj",lastName:"Deshmukh",email:"raj@gmail.com",password:"raj"});
-//     newEmp.save();
-//     res.json({
-//         emp : newEmp
-//     })
-//     } catch (error) {
-//         console.log(error);
-//         res.json({
-//             error : error
-//         })
-//     }
-// })
 
 //routes
 app.use("/user" , employeeRouter);
@@ -51,4 +32,4 @@ app.use("/common" , commonRouter)
 app.listen(4000 , ()=> console.log("Server Started"))
 mongoose.connect(process.env.MONGODB_URI, {
     dbName : "job-board-app"
-}).then(() => console.log("Database Started")).catch((err) => console.log(err))
+}).then(() => console.log("Database Started")).catch((err) => console.error(err))

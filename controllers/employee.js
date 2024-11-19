@@ -40,7 +40,6 @@ export const registerAcc = async(req,res) => {
             password : hashPassword
           })
           newUser.save();
-          console.log(newUser)
           res. status(201).json({
             success : true,
             message : "A new account has been created"
@@ -48,7 +47,7 @@ export const registerAcc = async(req,res) => {
         }
     }
      catch (error) {
-        console.log(error)
+        console.error(error)
         res.json({
             success : false,
             message : "Something went wrong",
@@ -73,7 +72,6 @@ export const loginAcc = async(req,res) => {
             })
         }
         const result = await bcrypt.compare(password , userData.password)
-        console.log(result)
         if(result == false)
         {
             return res.status(404).json({
@@ -100,7 +98,7 @@ export const loginAcc = async(req,res) => {
         })
     }
     }catch (error) {
-        console.log(error)
+        console.error(error)
         res.json({
             err : error
         })
@@ -115,7 +113,6 @@ export const applyToJob = async (req,res) => {
         const {applications} = await jobPost.findOne({
             _id : id    
         })
-        console.log(applications)
         if(applications.includes(req.user._id))
         {
              res.status(409).json({
@@ -137,7 +134,7 @@ export const applyToJob = async (req,res) => {
         }
     
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
     
 }
@@ -160,7 +157,6 @@ export const getjobs = async(req,res) => {
         if(search){
          regeExSearch = new RegExp(escapeStringRegexp(search) , 'gi')
         }
-        console.log(regeExSearch)
         const jobs = await jobPost.find({
             $or : [
                 { position : { $regex : regeExSearch}},
@@ -176,7 +172,7 @@ export const getjobs = async(req,res) => {
     }
     
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
     
 }
@@ -189,7 +185,7 @@ export const getMe = async (req,res) => {
             user 
         })
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
@@ -205,7 +201,7 @@ export const getOneJob = async (req,res) => {
             jobData
         })
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
  
 }
@@ -213,11 +209,9 @@ export const getOneJob = async (req,res) => {
 export const editProfile = async (req,res) => {
     try {
        const {firstName, lastName , email} = req.body
-       console.log(firstName , lastName , email)
 
        if(req.file)
        {
-       console.log(req.file)
        const b64 = Buffer.from(req.file.buffer).toString("base64");
        let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
 
@@ -247,7 +241,6 @@ export const editProfile = async (req,res) => {
         lastName : lastName,
         email : email,
         })
-          console.log(newUser)
           await newUser.save();
           res.json({
             success : true,
@@ -256,7 +249,7 @@ export const editProfile = async (req,res) => {
     }
 
     } catch (error) {
-        console.log(error)
+        console.error(error)
         res.json({
             success : false,
             message : "Something went wrong",

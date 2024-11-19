@@ -39,14 +39,13 @@ export const registerAcc = async(req,res) => {
             password : hashPassword
           })
           newUser.save();
-          console.log(newUser)
           res. status(201).json({
             success : true,
             message : "A new company account has been created"
           })
         }
     } catch (error) {
-        console.log(error)
+        console.error(error)
         res.json({
             success : false,
             message : "Something went wrong",
@@ -71,7 +70,6 @@ export const loginAcc = async(req,res) => {
         else
         {
             const result = await bcrypt.compare(password , userData.password)
-        console.log(result)
         if(result == false)
         {
             return res.status(404).json({
@@ -92,7 +90,7 @@ export const loginAcc = async(req,res) => {
         }
         
     }catch (error) {
-        console.log(error)
+        console.error(error)
         res.json({
             err : error
         })
@@ -138,7 +136,7 @@ export const createJobPost = async (req,res) => {
        
         
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
@@ -168,7 +166,7 @@ export const updatePost = async(req,res) => {
             message : "Post updated"
         })
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
@@ -190,7 +188,7 @@ export const deletePost = async (req,res) => {
             message : "Post deleted"
         })
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 
 }
@@ -202,14 +200,13 @@ export const getAllJobs = async(req,res) => {
         const jobs = await jobPost.find({
             companyId : _id
         }).populate("applications" , "firstName lastName email")
-        console.log(typeof jobs)
         res.json({
             message : "Jobs fetched",
             count : jobs.length,
             jobs
         })
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
    
 }
@@ -232,7 +229,7 @@ export const getApplicants = async (req , res) => {
         applications
     })
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
     
 }
@@ -250,18 +247,17 @@ export const getCompany = async (req,res) =>{
             company : companyData
         })
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
 export const editProfile = async (req,res) => {
     try {
        const {name, description , email} = req.body
-       console.log(name, description , email)
 
        if(req.file)
        {
-       console.log(req.file)
+
        const b64 = Buffer.from(req.file.buffer).toString("base64");
        let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
 
@@ -291,7 +287,7 @@ export const editProfile = async (req,res) => {
         description : description,
         email : email,
         })
-          console.log(newUser)
+         
           await newUser.save();
           res.json({
             success : true,
@@ -300,7 +296,7 @@ export const editProfile = async (req,res) => {
     }
 
     } catch (error) {
-        console.log(error)
+        console.error(error)
         res.json({
             success : false,
             message : "Something went wrong",

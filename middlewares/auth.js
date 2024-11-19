@@ -26,7 +26,7 @@ export const companyAuth = async(req,res,next) => {
         }
         
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
    
 }
@@ -57,7 +57,7 @@ export const employeeAuth = async(req,res,next) => {
         
        
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
    
 }

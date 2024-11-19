@@ -39,7 +39,7 @@ router.get("/me", async(req,res) => {
             
         }
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
    
 })
@@ -53,7 +53,7 @@ router.get("/allcompanies" , async(req,res) => {
             companies
         })
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 });
 
@@ -78,7 +78,7 @@ router.get("/logout" , async (req,res) => {
         }
 
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 })
 export default router;
